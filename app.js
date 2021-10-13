@@ -15,7 +15,8 @@ function app(people){
       // TODO: search by traits
       break;
       default:
-    app(people); // restart app
+        alert ("invalid input");
+    // app(people); // restart app
       break;
   }
   
@@ -88,12 +89,13 @@ function displayPerson(person){
 }
 
 // function that prompts and validates user input
+//Validation on user input is fixed
 function promptFor(question, valid){
   do{
-    var response = prompt(question).trim();
+    var response = prompt(question).value.trim();
   } while(!response || !valid(response));
   return response;
-}
+}          
 
 // helper function to pass into promptFor to validate yes/no answers
 function yesNo(input){
