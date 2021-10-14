@@ -39,6 +39,10 @@ function mainMenu(person, people){
   switch(displayOption){
     case "info":
     // TODO: get person's info
+    let key = promptFor("What is the person's info?", chars);
+    let person_list = searchByProperty(people, key);
+    alert("You have found " + person_list.length + " people.");
+    app(people);
     break;
     case "family":
     // TODO: get person's family
@@ -62,6 +66,21 @@ function searchByName(people){
 
   let foundPerson = people.find(function(person){
     if(person.firstName === firstName && person.lastName === lastName){
+      return true;
+    }
+    else{
+      return false;
+    }
+  })
+  // TODO: find the person using the name they entered
+  return foundPerson;
+}
+
+function searchByProperty(people, key) {
+  let value = promptFor("What is the person's " + key + "?", chars);
+
+  let foundPerson = people.filter(function(person){
+    if(person[key] === value){
       return true;
     }
     else{
