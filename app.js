@@ -60,6 +60,10 @@ function mainMenu(person, people){
     break;
     case "descendants":
     // TODO: get person's descendants
+    let descendants = searchDescedants(person, people);
+    let names = descendants.map(item => (item.firstName + ' ' + item.lastName)).join(",");
+    alert(names);
+    app(people);
     break;
     case "restart":
     app(people); // restart
@@ -164,6 +168,22 @@ function promptFor(question, valid){
 // helper function to pass into promptFor to validate yes/no answers
 function yesNo(input){
   return input.toLowerCase() == "yes" || input.toLowerCase() == "no";
+}
+
+function searchDescedants(person, people) {
+  let list = people.filter(item =>  {
+    return item.parents.includes(person.id);
+  });
+
+  let sub_result = [];
+  for(var i = 0; i < list.length; i++)
+  {
+    let item1 = list[i];
+    let result = searchDescedants(item1, people); // recursive function    
+    sub_result = sub_result.concat(result);
+  }
+
+  return list.concat(sub_result);
 }
 
 // helper function to pass in as default promptFor validation
