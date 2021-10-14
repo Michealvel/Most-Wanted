@@ -34,16 +34,22 @@ function mainMenu(person, people){
     return app(people); // restart
   }
 
-  let displayOption = prompt("Found " + person.firstName + " " + person.lastName + " . Do you want to know their 'info', 'family', or 'descendants'? Type the option you want or 'restart' or 'quit'");
+  let displayOption = prompt("Found " + person.firstName + " " + person.lastName + " . Do you want to find people with 'single', 'multiple' criteria? Type the option you want or 'restart' or 'quit'");
 
   switch(displayOption){
-    case "info":
-    // TODO: get person's info
-    let key = promptFor("What is the person's info?", chars);
-    let person_list = searchByProperty(people, key);
-    alert("You have found " + person_list.length + " people.");
-    app(people);
-    break;
+    case "single":
+      // TODO: get person's info
+      let key = promptFor("What is the person's info?", chars);
+      let person_list = searchByProperty(people, key);
+      alert("You have found " + person_list.length + " people.");
+      app(people);
+      break;
+    case "multiple":
+      let query = promptFor("Please input the search Query", chars);
+      let query_result = searchByQuery(people, query);
+      alert("You have found " + query_result.length + " people.");
+      app(people);
+      break;
     case "family":
     // TODO: get person's family
     break;
@@ -87,6 +93,40 @@ function searchByProperty(people, key) {
       return false;
     }
   })
+  // TODO: find the person using the name they entered
+  return foundPerson;
+}
+
+function searchByQuery(people, query) {
+  // parse query
+  let list = query.split(",");
+
+  let query_list = [];
+  for(var i = 0; i < list.length; i++)
+  {
+    let item = list[i].split("=");
+    let key = item[0].trim();
+    let value = item[1].trim();
+
+    query_list.push({key: key, value: value});
+  }
+ 
+  let foundPerson = people.filter(function(person){
+    let matched = true;
+    for(var i = 0; i < query_list.length; i++)
+    {
+      let item = query_list[i];
+      if( person[item['key']] != item['value'])
+      {
+        matched = false;
+        break;
+      }      
+    }
+
+    return matched;
+  })
+
+  console.log("Multiple Search Result", foundPerson);
   // TODO: find the person using the name they entered
   return foundPerson;
 }
