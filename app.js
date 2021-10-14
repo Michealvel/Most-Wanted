@@ -34,7 +34,7 @@ function mainMenu(person, people){
     return app(people); // restart
   }
 
-  let displayOption = prompt("Found " + person.firstName + " " + person.lastName + " . Do you want to find people with 'single', 'multiple' criteria or 'detail'? Type the option you want or 'restart' or 'quit'");
+  let displayOption = prompt("Found " + person.firstName + " " + person.lastName + " . Do you want to find people with 'single', 'multiple' criteria or 'detail', 'descendants', 'family'? Type the option you want or 'restart' or 'quit'");
 
   switch(displayOption){
     case "single":
@@ -57,6 +57,9 @@ function mainMenu(person, people){
       break;
     case "family":
     // TODO: get person's family
+    let family = findFamily(person, people);
+    alert(family);
+    app(people);
     break;
     case "descendants":
     // TODO: get person's descendants
@@ -186,6 +189,26 @@ function searchDescedants(person, people) {
   return list.concat(sub_result);
 }
 
+function findFamily(person, people)
+{
+  // find parent
+  let parents = people.filter(item => person.parents.includes(item.id)).map(item => (item.firstName + " " + item.lastName)).join(", ");
+
+  // find spouse
+  let spouse = people.filter(item => item.id === person.currentSpouse).map(item => (item.firstName + " " + item.lastName)).join(", ");
+
+  // find sibling
+  let siblings = people.filter(item => {
+    let p1 = JSON.stringify(item.parents);
+    let p2 = JSON.stringify(person.parents);
+    console.log(p1, p2);
+    return p1 == p2 && item.id !== person.id
+  }).map(item => (item.firstName + " " + item.lastName)).join(", ");
+
+  let result = `Parents: ${parents}, Spouse: ${spouse}, Siblings: ${siblings}`;
+
+  return result;
+}
 // helper function to pass in as default promptFor validation
 function chars(input){
   return true; // default validation only
