@@ -34,7 +34,7 @@ function mainMenu(person, people){
     return app(people); // restart
   }
 
-  let displayOption = prompt("Found " + person.firstName + " " + person.lastName + " . Do you want to find people with 'single', 'multiple' criteria? Type the option you want or 'restart' or 'quit'");
+  let displayOption = prompt("Found " + person.firstName + " " + person.lastName + " . Do you want to find people with 'single', 'multiple' criteria or 'detail'? Type the option you want or 'restart' or 'quit'");
 
   switch(displayOption){
     case "single":
@@ -48,6 +48,11 @@ function mainMenu(person, people){
       let query = promptFor("Please input the search Query", chars);
       let query_result = searchByQuery(people, query);
       alert("You have found " + query_result.length + " people.");
+      app(people);
+      break;
+    case "detail":
+      let traits = `EyeColor: ${person.eyeColor}, Gender: ${person.gender}, Birthday: ${person.dob}, Height: ${person.height}, Weight: ${person.weight}`;
+      alert(traits);
       app(people);
       break;
     case "family":
