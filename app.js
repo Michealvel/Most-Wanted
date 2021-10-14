@@ -60,7 +60,7 @@ function searchByName(people){
   let firstName = promptFor("What is the person's first name?", chars);
   let lastName = promptFor("What is the person's last name?", chars);
 
-  let foundPerson = people.filter(function(person){
+  let foundPerson = people.find(function(person){
     if(person.firstName === firstName && person.lastName === lastName){
       return true;
     }
@@ -89,10 +89,10 @@ function displayPerson(person){
 }
 
 // function that prompts and validates user input
-//Validation on user input is fixed
+
 function promptFor(question, valid){
   do{
-    var response = prompt(question).value.trim();
+    var response = prompt(question).trim()
   } while(!response || !valid(response));
   return response;
 }          
